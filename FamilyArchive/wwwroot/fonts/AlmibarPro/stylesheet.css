@@ -1,0 +1,11 @@
+@font-face {
+    font-family: 'Almibar Pro';
+    src: url('AlmibarPro.eot');
+    src: local('Almibar Pro'), local('AlmibarPro'),
+        url('AlmibarPro.eot?#iefix') format('embedded-opentype'),
+        url('AlmibarPro.woff') format('woff'),
+        url('AlmibarPro.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+

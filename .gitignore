@@ -1,0 +1,10 @@
+*.sln
+.vs/
+FamilyArchive/bin/
+FamilyArchive/Logs/
+FamilyArchive/Migrations/
+FamilyArchive/obj/
+FamilyArchive/Properties/
+*.pfx
+FamilyArchive/FamilyArchive.csproj
+FamilyArchive/FamilyArchive.csproj.user
