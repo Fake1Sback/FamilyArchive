@@ -30,8 +30,7 @@ namespace FamilyArchive
         {
             services.AddHttpsRedirection(options =>
             {
-                options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
-                options.HttpsPort = Convert.ToInt32(Configuration["HttpsPort"]);
+                options.RedirectStatusCode = StatusCodes.Status308PermanentRedirect;
             });
 
             services.AddHsts(options =>
@@ -46,9 +45,6 @@ namespace FamilyArchive
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
-            //string ConnectionString = Configuration["ConnectionString"];
-            //services.AddDbContext<FamilyArchiveContext>(options => options.UseSqlServer(ConnectionString));
 
             services.AddTransient<PathHelperService>();
             services.AddTransient<DbService>();
@@ -83,7 +79,7 @@ namespace FamilyArchive
 
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}");             
+                    template: "{controller=Home}/{action=Index}");
             });
         }
     }

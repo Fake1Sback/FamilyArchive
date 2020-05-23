@@ -196,7 +196,7 @@ namespace FamilyArchive.Controllers
                 else if (path.EndsWith(".mp4"))
                     extension = "video/mp4";
 
-                return File(file, extension, path.Split('\\').Last());
+                return File(file, extension,path.Split('\\').Last());
             }
             else
                 return BadRequest("File does not exist");

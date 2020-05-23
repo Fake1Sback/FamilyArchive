@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Newtonsoft.Json;
 
 namespace FamilyArchive.Models.DbModels
 {
@@ -15,7 +18,9 @@ namespace FamilyArchive.Models.DbModels
         {
             if (!optionsBuilder.IsConfigured)
             {
-                // UseSqlServer("Connection string");           
+                var jsonConfig = File.ReadAllLines(".\\appsettings.json");
+                var values = JsonConvert.DeserializeObject<Dictionary<string, string>>("{" + jsonConfig[6] + "}");
+                optionsBuilder.UseSqlServer(values["ConnectionString"]);             
             }
         }
 

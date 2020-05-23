@@ -138,13 +138,14 @@ namespace FamilyArchive.Services
             if (File.Exists(fullPathToThumbnail))
                 File.Delete(fullPathToThumbnail);
 
-            string ThumbnailGenerationString = string.Format(@"ffmpeg -ss 3 -i ""{0}"" -vframes 1 -s 1280x960 ""{1}""", fullPathToVideo, fullPathToThumbnail);
-
+            string ThumbnailGenerationString = string.Format(@"-ss 3 -i ""{0}"" -vframes 1 -s 1280x960 ""{1}""", fullPathToVideo, fullPathToThumbnail);
+   
             ProcessStartInfo startInfo = new ProcessStartInfo
             {
                 WindowStyle = ProcessWindowStyle.Hidden,
-                FileName = "cmd.exe",
-                Arguments = "/C " + ThumbnailGenerationString
+                CreateNoWindow = true,
+                FileName = Path.Combine(Directory.GetCurrentDirectory(), "ffmpeg\\bin\\ffmpeg.exe"),
+                Arguments = ThumbnailGenerationString
             };
 
             Process process = new Process()

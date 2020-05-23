@@ -14,8 +14,9 @@
     $('#Gradient_container').hide();
     $('#load_more_button_container').hide();
 
+    GalleryResize();
     HidePopUp();
-    GetMaxAmountOfLoads();   
+    GetMaxAmountOfLoads();
 
     $('#menu_button').click(function () {
         $('#options_container').slideToggle(1000);
@@ -61,8 +62,8 @@
             $('#DetailedVideo').attr('src', url);
         }
 
-        $('#Gradient_container').show();  
-        $(window).scrollTop($('#photo_container').offset().top);         
+        $('#Gradient_container').show();
+        $(window).scrollTop($('#photo_container').offset().top);
     });
 
     $('#file_input').on('change', function (e) {
@@ -83,7 +84,10 @@
             $('#photo_container').empty();
             $('#Gradient_container').hide();
 
-            $('#Gallery_Container').empty();
+            $('.Gallery-SubContainer').each(function (_, el) {
+                $(this).empty();
+            });
+
             $('.options_item').empty();
 
             $(window).scrollTop($('#Gallery_Container').offset().top);
@@ -94,13 +98,119 @@
             }
 
             current_loads = 0;
-            GetMaxAmountOfLoads();           
+            GetMaxAmountOfLoads();
         }
         else {
             var full_fs_item_name = $(this).siblings('div').text();
             ShowPopUp(full_fs_item_name, false, true);
         }
     });
+
+    function GalleryResize() {
+        var width = $(this).width();
+        var subcontainers = $('.Gallery-SubContainer');
+
+        if (width >= 768) {
+            if (subcontainers.length !== 3) {
+                if (subcontainers.length === 0) {
+                    $('#Gallery_Container').append("<div class='Gallery-SubContainer'></div>");
+                    $('#Gallery_Container').append("<div class='Gallery-SubContainer'></div>");
+                    $('#Gallery_Container').append("<div class='Gallery-SubContainer'></div>");
+                }
+                else if (subcontainers.length === 2) {
+                    $('#Gallery_Container').append("<div class='Gallery-SubContainer'></div>");
+                    FixDivs(3);
+                }
+            }
+        }
+        else if (width >= 480 && width < 768) {
+            if (subcontainers.length !== 2) {
+                if (subcontainers.length === 0) {
+                    $('#Gallery_Container').append("<div class='Gallery-SubContainer'></div>");
+                    $('#Gallery_Container').append("<div class='Gallery-SubContainer'></div>");
+                }
+                else if (subcontainers.length === 1) {
+                    FixDivs(2, false);
+                }
+                else if (subcontainers.length === 3) {
+                    FixDivs(2, true);
+                }
+            }
+        }
+        else if (width < 480) {
+            if (subcontainers.length !== 1) {
+                if (subcontainers.length === 0) {
+                    $('#Gallery_Container').append("<div class='Gallery-SubContainer'></div>");
+                }
+                else if (subcontainers.length === 2) {
+                    FixDivs(1);
+                }
+            }
+        }
+    }
+
+    function FixDivs(desiredAmout, removing) {
+       
+        if (desiredAmout === 3) {
+            var newSubcontainers = $('.Gallery-SubContainer');
+            var firstDiv = newSubcontainers.eq(0);
+            var secondDiv = newSubcontainers.eq(1);
+            var thirdDiv = newSubcontainers.eq(2);
+
+            while (thirdDiv.height() < firstDiv.height() && thirdDiv.height() < secondDiv.height()) {
+                if (firstDiv.height() > secondDiv.height()) {
+                    var detachedElement = firstDiv.children().first().detach();
+                    thirdDiv.append(detachedElement);
+                }
+                else if (firstDiv.height() <= secondDiv.height()) {
+                    var detachedElement = secondDiv.children().first().detach();
+                    thirdDiv.append(detachedElement);
+                }
+            }
+        }
+        else if (desiredAmout === 2 && removing === false) {
+            $('#Gallery_Container').append("<div class='Gallery-SubContainer'></div>");
+            var newSubcontainers = $('.Gallery-SubContainer');
+            var firstDiv = newSubcontainers.eq(0);
+            var secondDiv = newSubcontainers.eq(1);
+
+            while (parseInt(firstDiv.height()) > parseInt(secondDiv.height())) {
+                var detachedElement = firstDiv.children().first().detach();
+                secondDiv.append(detachedElement);
+            }
+        }
+        else if (desiredAmout === 2 && removing === true) {
+            var firstDiv = $('.Gallery-SubContainer').eq(0);
+            var secondDiv = $('.Gallery-SubContainer').eq(1);
+            var thirdDiv = $('.Gallery-SubContainer').eq(2);
+
+            while (thirdDiv.height() !== 0) {
+                var detachedElement = thirdDiv.children().last().detach();
+                if (firstDiv.height() < secondDiv.height()) {
+                    firstDiv.append(detachedElement);
+                }
+                else {
+                    secondDiv.append(detachedElement);
+                }
+            }
+
+            thirdDiv.remove();
+        }
+        else if (desiredAmout === 1) {
+            var newSubcontainers = $('.Gallery-SubContainer');
+            var firstDiv = newSubcontainers.eq(0);
+            var secondDiv = newSubcontainers.eq(1);
+
+            while (secondDiv.height() !== 0) {             
+                var detachedElement = secondDiv.children().first().detach();
+                firstDiv.append(detachedElement);
+            }
+
+            secondDiv.remove();
+        }
+    }
+
+    $(window).resize(GalleryResize); 
 
     $(window).scroll(function () {
         if ($(window).scrollTop() + $(window).height() >= $(document).height() - 80) {
@@ -169,28 +279,7 @@
                 contentType: "application/json",
                 dataType: 'json',
                 success: function (photos) {
-
-                    if (current_loads === 0) {
-                        $('#Gallery_Container').empty();
-                    }
-
-                    for (var i = 0; i < photos.length; i++) {
-                        if (photos[i].photoHeader === null)
-                            photos[i].photoHeader = "";
-                        if (photos[i].photoDescription === null)
-                            photos[i].photoDescription = "";
-                        if (!photos[i].isVideo) {
-                            $('#Gallery_Container').append("<div class='Gallery_Item'><img src='" + photos[i].photoBase64 + "'/><input type='hidden' value='photo'/><input type='hidden' value='" + photos[i].photoName + "' /><h2>" + photos[i].photoHeader + "</h2><p>" + photos[i].photoDescription + "</p></div>");
-                        }
-                        else {
-                            if (photos[i].photoBase64) {
-                                $('#Gallery_Container').append("<div class='Gallery_Item'><img src='" + photos[i].photoBase64 + "'/><input type='hidden' value='video'/><input type='hidden' value='" + photos[i].photoName + "' /><h2>" + photos[i].photoHeader + "</h2><p>" + photos[i].photoDescription + "</p></div>");
-                            }
-                            else {
-                                $('#Gallery_Container').append("<div class='Gallery_Item'><img src='/images/video_black.png'/><input type='hidden' value='video'/><input type='hidden' value='" + photos[i].photoName + "' /><h2>" + photos[i].photoHeader + "</h2><p>" + photos[i].photoDescription + "</p></div>");
-                            }
-                        }
-                    }
+                    PlacePhotos(photos);
                     HidePopUp();
                 },
                 error: function (xhr) {
@@ -206,7 +295,59 @@
             });
         }   
     }
-  
+
+    var photosArr = [];
+    var MyIntervals = [];
+   
+    function PlacePhotos(photos) {
+
+        if (current_loads === 0) {
+            $('.Gallery-SubContainer').each((_, el) => {
+                el.innerHTML = '';
+            });
+        }
+
+        for (var i = 0; i < photos.length; i++) {
+            photosArr.push(photos[i]);
+        }
+
+        MyIntervals.push(setInterval(PutPhotoToContainer, 100));     
+    }
+
+    function PutPhotoToContainer() {
+        if (photosArr.length > 0) {
+            var subcontainers = $('.Gallery-SubContainer');
+            var SmallestContainer = subcontainers.eq(0);
+
+            for (var j = 0; j < subcontainers.length; j++) {
+                if (SmallestContainer.height() > subcontainers.eq(j).height()) {
+                    SmallestContainer = subcontainers.eq(j);
+                }
+            }
+
+            var photo = photosArr.shift();
+
+            if (photo.photoHeader === null)
+                photo.photoHeader = "";
+            if (photo.photoDescription === null)
+                photo.photoDescription = "";
+            if (!photo.isVideo) {
+                SmallestContainer.append("<div class='Gallery_Item'><img src='" + photo.photoBase64 + "'/><input type='hidden' value='photo'/><input type='hidden' value='" + photo.photoName + "' /><h2>" + photo.photoHeader + "</h2><p>" + photo.photoDescription + "</p></div>");
+            }
+            else {
+                if (photos[i].photoBase64) {
+                    SmallestContainer.append("<div class='Gallery_Item'><img src='" + photo.photoBase64 + "'/><input type='hidden' value='video'/><input type='hidden' value='" + photo.photoName + "' /><h2>" + photo.photoHeader + "</h2><p>" + photo.photoDescription + "</p></div>");
+                }
+                else {
+                    SmallestContainer.append("<div class='Gallery_Item'><img src='/images/video_black.png'/><input type='hidden' value='video'/><input type='hidden' value='" + photo.photoName + "' /><h2>" + photo.photoHeader + "</h2><p>" + photo.photoDescription + "</p></div>");
+                }
+            }
+        }
+        else {
+            clearInterval(MyIntervals.shift());
+        }
+    }
+
     function UploadFiles() {
         if (loading_now === false) {
             loading_now = true;
@@ -227,6 +368,11 @@
                 processData: false,
                 contentType: false,
                 success: function () {
+
+                    $('.Gallery-SubContainer').each((_, el) => {
+                        el.innerHTML = '';
+                    });
+
                     $('#file_input').remove();
                     $('#upload_button').append('<input id="file_input" name="photos" type="file" multiple>');
                     $('#file_input').on('change', function (e) {
@@ -244,7 +390,7 @@
                     GetMaxAmountOfLoads();
                 }
             });
-        }    
+        }
     }
 
     function CreateFolder(_path, _folderName) {
@@ -435,7 +581,11 @@
         }
         $('#fs_cur_path_container p').text('Поточний шлях:' + path);
 
-        $('#Gallery_Container').empty();
+        //$('#Gallery_Container').empty();
+        $('.Gallery-SubContainer').each(function (_, el) {
+            $(this).empty();
+        });
+ 
         $('.options_item').empty();
 
         $('#photo_container').empty();

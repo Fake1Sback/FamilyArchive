@@ -5,6 +5,7 @@ FamilyArchive/Logs/
 FamilyArchive/Migrations/
 FamilyArchive/obj/
 FamilyArchive/Properties/
+FamilyArchive/ffmpeg/
 *.pfx
 FamilyArchive/FamilyArchive.csproj
 FamilyArchive/FamilyArchive.csproj.user
