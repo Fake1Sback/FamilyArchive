@@ -31,6 +31,9 @@ button, input[type='text'], textarea {
 }
 
 header {
+    margin-left:auto;
+    margin-right:auto;
+    max-width:1920px;
     background-color: orange;
     display: flex;
     flex-direction: row;
@@ -81,12 +84,15 @@ header p{
 }
 
 .options_item {
+    margin-left:auto;
+    margin-right:auto;
+    max-width:1920px;
     display:flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    margin-top:5%;
+    margin-top:70px;
 }
 
 #upload_photos_form p{
@@ -94,7 +100,9 @@ header p{
 }
 
 #upload_button_container {
-    margin: 0;
+    max-width:1920px;
+    margin-left:auto;
+    margin-right:auto;
     text-align: center;
     font-size: 1.6em;
     color: white;
@@ -134,6 +142,7 @@ header p{
 }
 
 #fs_cur_path_container{
+    max-width:1920px;
     background-color: #FF8B00;
     border-radius: 25px;
     border:3px solid white;
@@ -153,6 +162,18 @@ header p{
     font-size: 30px;
     outline: none;
     width: 50%;
+}
+
+#create_folder_container {
+    max-width: 1920px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 70px;
+    margin-bottom: 0px;
+    text-align: center;
+    font-size: 25px;
+    font-weight: 500;
+    color: white;
 }
 
 #create_folder_submit{
@@ -209,6 +230,9 @@ header p{
 }
 
 .fs_item_container {
+    max-width:1920px;
+    margin-left:auto;
+    margin-right:auto;
     text-align: center;
     margin: 3%;
     font-size: 25px;
@@ -356,6 +380,7 @@ header p{
 }
 
 #Gallery_Container{
+    max-width:1920px;
     margin:20px auto;
     padding-left: 2%;
     padding-right: 2%;
@@ -580,10 +605,13 @@ header p{
         font-weight: 600;
     }
 
-    /*#Gallery_Container {
-        grid-template-columns: 1fr 1fr;
-        columns: 2;
-    }*/
+    #create_folder_container {
+        margin-top: 30px;
+    }
+
+    .options_item {
+        margin-top: 40px;
+    }
    
     .Gallery_Item p {
         color: #004080;
@@ -641,10 +669,14 @@ header p{
         font-size: 20px;
     }
 
+    #create_folder_container{
+        margin-top:30px;
+    }
+
     #create_folder_submit {
         width: 70%;
         height: 40px;
-        font-size:15px;
+        font-size: 15px;
     }
 
     .fs_item_container {
@@ -683,10 +715,9 @@ header p{
         padding:20px;
     }
 
-    /*#Gallery_Container{ 
-        grid-template-columns: 1fr;
-        columns:1;
-    } */
+    .options_item {
+        margin-top:30px;
+    }
 
     #photo_details_container {
         display: block;

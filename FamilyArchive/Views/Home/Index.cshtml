@@ -8,11 +8,13 @@
     <script src="~/js/js_script.js"></script>
 </head>
 <body>
-    <header>
-        <button id="menu_button"></button>      
-        <p>Family Archive</p>
-        <button id="menu_button2"></button>     
-    </header>
+    <div style="background-color:orange;">
+        <header>
+            <button id="menu_button"></button>
+            <p>Family Archive</p>
+            <button id="menu_button2"></button>
+        </header>
+    </div>
     <div id="options_container">
         <div id="upload_button_container">
             <form id="upload_photos_form" method="post" enctype="multipart/form-data" multiple>
@@ -26,7 +28,7 @@
         <div id="fs_cur_path_container">
             <p>Поточний шлях:</p>
         </div>
-        <div id="create_folder_container" class="fs_item_container">
+        <div id="create_folder_container">
             <input id="new_folder_name_field" type="text" value="Folder Name" name="FolderName"></br>
             <button id="create_folder_submit">Створити</button>
         </div>
