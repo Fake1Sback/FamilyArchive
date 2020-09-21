@@ -13,6 +13,7 @@ using System.Net.Http.Headers;
 using FamilyArchive.Models.DbModels;
 using ImageMagick;
 using System.Text;
+using System.Drawing;
 
 namespace FamilyArchive.Controllers
 { 
@@ -91,6 +92,8 @@ namespace FamilyArchive.Controllers
                 string FullPath = _pathHelper.GetFullPathToFile(fileName);
                 if (!System.IO.File.Exists(FullPath))
                     await System.IO.File.WriteAllBytesAsync(FullPath, uploadedPhoto.fileContent);
+                else
+                    uploadedPhotos.Remove(uploadedPhoto);
             }
 
             Task task = Task.Factory.StartNew(() =>
