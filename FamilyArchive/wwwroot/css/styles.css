@@ -261,6 +261,9 @@ header p{
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    max-width:1920px;
+    margin-left:auto;
+    margin-right:auto;
 }
 
 #photo_container{
@@ -327,6 +330,9 @@ header p{
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    max-width:1920px;
+    margin-left:auto;
+    margin-right:auto;
 }
 
 #photo_details_buttons_container div{
@@ -382,8 +388,6 @@ header p{
 #Gallery_Container{
     max-width:1920px;
     margin:20px auto;
-    padding-left: 2%;
-    padding-right: 2%;
     display:flex;
     flex-direction:row;
     justify-content:space-evenly;
@@ -395,9 +399,8 @@ header p{
 }
 
 .Gallery_Item{
-   /* position:relative; */
     margin: 0;
-    padding: 10px;
+    padding: 10px 15px;
     overflow: hidden;
     background-color: #fff;
     break-inside: avoid;
@@ -442,7 +445,7 @@ header p{
 }
 
 .Gallery_Item img{
-    max-width:100%;
+    width:100%;
     border-radius:10px; 
 }
 
