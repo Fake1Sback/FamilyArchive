@@ -86,6 +86,24 @@ namespace FamilyArchive.Controllers
                 MemoryStream memoryStream = new MemoryStream();
                 photos[i].CopyTo(memoryStream);
 
+                bool binaryCheck = false;
+
+                if (photos[i].FileName.EndsWith(".mp4"))
+                {
+                    binaryCheck = memoryStream.IsMp4();
+                }
+                else if (photos[i].FileName.EndsWith(".jpg"))
+                {
+                    binaryCheck = memoryStream.IsJpg();
+                }
+                else if (photos[i].FileName.EndsWith(".png"))
+                {
+                    binaryCheck = memoryStream.IsPng();
+                }
+
+                if (!binaryCheck)
+                    continue;
+
                 UploadedPhoto uploadedPhoto = new UploadedPhoto { filename = fileName, fileContent = memoryStream.ToArray() };
                 uploadedPhotos.Add(uploadedPhoto);
 
