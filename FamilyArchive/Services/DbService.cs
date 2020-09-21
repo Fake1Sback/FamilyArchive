@@ -109,7 +109,7 @@ namespace FamilyArchive.Services
                     Base64PhotoString = "data:image/png;base64," + Encoding.ASCII.GetString(photo.PhotoBase64);
                     encodedPhoto.IsVideo = false;
                 }
-                else if (photo.Name.EndsWith(".jpg") && !photo.IsThumbnail)
+                else if ((photo.Name.EndsWith(".jpg") || photo.Name.EndsWith(".jpeg")) && !photo.IsThumbnail)
                 {
                     Base64PhotoString = "data:image/jpg;base64," + Encoding.ASCII.GetString(photo.PhotoBase64);
                     encodedPhoto.IsVideo = false;

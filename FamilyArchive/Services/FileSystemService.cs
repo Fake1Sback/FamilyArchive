@@ -28,7 +28,7 @@ namespace FamilyArchive.Services
         public List<string> GetAllFilesInFolder(string FullPath)
         {
             List<string> Files = new List<string>();
-            Files.AddRange(Directory.GetFiles(FullPath).Where(s => !s.EndsWith("temp_thumbnail.png") && (s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".mp4"))));         
+            Files.AddRange(Directory.GetFiles(FullPath).Where(s => !s.EndsWith("temp_thumbnail.png") && (s.EndsWith(".jpg") || s.EndsWith(".jpeg") || s.EndsWith(".png") || s.EndsWith(".mp4"))));         
             return Files;
         }
 
@@ -78,7 +78,7 @@ namespace FamilyArchive.Services
 
             for (int i = 0; i < fileInfos.Count; i++)
             {
-                if(fileInfos[i].FullName.EndsWith(".png") || fileInfos[i].FullName.EndsWith(".jpg"))
+                if(fileInfos[i].FullName.EndsWith(".png") || fileInfos[i].FullName.EndsWith(".jpg") || fileInfos[i].FullName.EndsWith(".jpeg"))
                     storedFiles.Add(new StoredFile { IsFolder = false, IsVideo = false, FolderEmpty = true, Name = fileInfos[i].FullName.Split('\\').Last() });
                 else if(fileInfos[i].FullName.EndsWith(".mp4"))
                     storedFiles.Add(new StoredFile { IsFolder = false, IsVideo = true, FolderEmpty = true, Name = fileInfos[i].FullName.Split('\\').Last() });
@@ -100,7 +100,7 @@ namespace FamilyArchive.Services
                 imgSrcString = string.Format("data:image/png;base64,{0}", imgBase64);
                 encodedPhoto.IsVideo = false;
             }
-            else if (Fullpath.EndsWith(".jpg"))
+            else if (Fullpath.EndsWith(".jpg") || Fullpath.EndsWith(".jpeg"))
             {
                 imgSrcString = string.Format("data:image/jpg;base64,{0}", imgBase64);
                 encodedPhoto.IsVideo = false;

@@ -92,7 +92,7 @@ namespace FamilyArchive.Controllers
                 {
                     binaryCheck = memoryStream.IsMp4();
                 }
-                else if (photos[i].FileName.EndsWith(".jpg"))
+                else if (photos[i].FileName.EndsWith(".jpg") || photos[i].FileName.EndsWith(".jpeg"))
                 {
                     binaryCheck = memoryStream.IsJpg();
                 }
@@ -120,7 +120,7 @@ namespace FamilyArchive.Controllers
                 {
                     for (int i = 0; i < uploadedPhotos.Count; i++)
                     {
-                        if (uploadedPhotos[i].filename.EndsWith(".png") || uploadedPhotos[i].filename.EndsWith(".jpg"))
+                        if (uploadedPhotos[i].filename.EndsWith(".png") || uploadedPhotos[i].filename.EndsWith(".jpg") || uploadedPhotos[i].filename.EndsWith(".jpeg"))
                         {
                             _dbService.AddPhotoToDb(uploadedPhotos[i], db);
                         }
@@ -212,7 +212,7 @@ namespace FamilyArchive.Controllers
                 string extension = string.Empty;
                 if (path.EndsWith(".png"))
                     extension = "image/png";
-                else if (path.EndsWith(".jpg"))
+                else if (path.EndsWith(".jpg") || path.EndsWith(".jpeg"))
                     extension = "image/jpg";
                 else if (path.EndsWith(".mp4"))
                     extension = "video/mp4";
